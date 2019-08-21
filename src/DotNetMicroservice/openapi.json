@@ -6,12 +6,24 @@
     "version": "1.0.0"
   },
   "paths": {
-    "/api/subscriptions": {
+    "/api/orders/{userId}": {
       "get": {
         "tags": [
-          "Subscriptions"
+          "Orders"
         ],
-        "operationId": "Subscriptions_GetAll",
+        "operationId": "Orders_GetOrders",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          }
+        ],
         "responses": {
           "200": {
             "description": "",
@@ -20,7 +32,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Subscription"
+                    "$ref": "#/components/schemas/OrderDto"
                   }
                 }
               }
@@ -30,82 +42,27 @@
       },
       "post": {
         "tags": [
-          "Subscriptions"
+          "Orders"
         ],
-        "operationId": "Subscriptions_Post",
-        "requestBody": {
-          "x-name": "value",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Subscription"
-              }
-            }
-          },
-          "required": true,
-          "x-position": 1
-        },
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/api/subscriptions/{id}": {
-      "get": {
-        "tags": [
-          "Subscriptions"
-        ],
-        "operationId": "Subscriptions_Get",
+        "operationId": "Orders_CreateOrder",
         "parameters": [
           {
-            "name": "id",
+            "name": "userId",
             "in": "path",
             "required": true,
             "schema": {
-              "type": "integer",
-              "format": "int32"
-            },
-            "x-position": 1
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Subscription"
-                }
-              }
-            }
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "Subscriptions"
-        ],
-        "operationId": "Subscriptions_Put",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string",
+              "nullable": true
             },
             "x-position": 1
           }
         ],
         "requestBody": {
-          "x-name": "value",
+          "x-name": "order",
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Subscription"
+                "$ref": "#/components/schemas/OrderDto"
               }
             }
           },
@@ -114,30 +71,14 @@
         },
         "responses": {
           "200": {
-            "description": ""
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Subscriptions"
-        ],
-        "operationId": "Subscriptions_Delete",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            },
-            "x-position": 1
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": ""
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
           }
         }
       }
@@ -145,7 +86,7 @@
   },
   "components": {
     "schemas": {
-      "Subscription": {
+      "OrderDto": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
@@ -153,21 +94,13 @@
             "type": "string",
             "nullable": true
           },
-          "userId": {
-            "type": "string",
-            "nullable": true
-          },
           "productId": {
             "type": "string",
             "nullable": true
           },
-          "start": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "end": {
-            "type": "string",
-            "format": "date-time"
+          "quantity": {
+            "type": "integer",
+            "format": "int32"
           }
         }
       }

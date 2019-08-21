@@ -8,12 +8,14 @@
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="NSwag.AspNetCore" Version="13.0.5" />
     <PackageReference Include="NSwag.MSBuild" Version="13.0.5" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
+
+    <!-- ## Messaging -->
+    <PackageReference Include="Namotion.Messaging" Version="0.2.2" />
+    <PackageReference Include="Namotion.Messaging.Json" Version="0.2.2" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DotNetMicroservice.Domain\DotNetMicroservice.Domain.csproj" />
+    <ProjectReference Include="..\DotNetMicroservice.Services\DotNetMicroservice.Services.csproj" />
   </ItemGroup>
 
   <!-- ## NSwag -->

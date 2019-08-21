@@ -6,12 +6,14 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.0.1" />
     <PackageReference Include="xunit" Version="2.4.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DotNetMicroservice.Client\DotNetMicroservice.Client.csproj" />
+    <ProjectReference Include="..\DotNetMicroservice.Processes\DotNetMicroservice.Processes.csproj" />
     <ProjectReference Include="..\DotNetMicroservice\DotNetMicroservice.csproj" />
   </ItemGroup>
 </Project>

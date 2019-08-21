@@ -9,16 +9,21 @@ using System.Threading.Tasks;
 
 namespace DotNetMicroservice.Processes
 {
-    public class CreateSubscriptionMessageProcessorService : BackgroundService
+    // ## Messaging: Receiver
+
+    public class CreateOrderMessageProcessorService : BackgroundService
     {
-        private readonly IMessageReceiver<CreateSubscriptionMessage> _messageReceiver;
-        private readonly ISubscriptionService _subscriptionService;
+        private readonly IMessageReceiver<CreateOrderMessage> _messageReceiver;
+        private readonly IOrderService _orderService;
         private readonly ILogger _logger;
 
-        public CreateSubscriptionMessageProcessorService(IMessageReceiver<CreateSubscriptionMessage> messageReceiver, ISubscriptionService subscriptionService, ILogger logger)
+        public CreateOrderMessageProcessorService(
+            IMessageReceiver<CreateOrderMessage> messageReceiver,
+            IOrderService orderService,
+            ILogger<CreateOrderMessageProcessorService> logger)
         {
             _messageReceiver = messageReceiver;
-            _subscriptionService = subscriptionService;
+            _orderService = orderService;
             _logger = logger;
         }
 
@@ -31,12 +36,12 @@ namespace DotNetMicroservice.Processes
                     try
                     {
                         var message = m.Object;
-                        await _subscriptionService.CreateOrExtendAsync(message.SubscriptionId, message.UserId, message.ProductId);
+                        await _orderService.CreateOrderAsync(message.Id, message.UserId, message.ProductId, message.Quantity);
                         await _messageReceiver.ConfirmAsync(m, ct);
                     }
                     catch (Exception e)
                     {
-                        _logger.LogError(e, $"Error while processing {nameof(CreateSubscriptionMessage)} message.");
+                        _logger.LogError(e, $"Error while processing {nameof(CreateOrderMessage)} message.");
                         await _messageReceiver.RejectAsync(m, ct);
                     }
                 }
