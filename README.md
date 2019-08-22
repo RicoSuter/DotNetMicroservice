@@ -8,4 +8,4 @@ The microservice is composed of three individual parts:
 - Create order processor (queue listener)
 - Complete order processor (queue listener)
 
-These parts can be run individually as separate processors or in a single process (scaled-down version).
+These parts can be run individually as separate processes or in a single process (scaled-down version).
