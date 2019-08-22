@@ -1,4 +1,4 @@
-# ShopOnCoreMicroservice
+# DotNetMicroservice
 
 A sample (logical) microservice implementation in .NET
 
