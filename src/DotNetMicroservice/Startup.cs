@@ -25,15 +25,20 @@ namespace DotNetMicroservice
 
             // Register business services
             services.AddSingleton<IOrderStorage, InMemoryOrderStorage>();
+            services.AddSingleton<IProductService, InMemoryProductService>();
             services.AddSingleton<IOrderService, OrderService>();
 
             // ## NSwag
             services.AddOpenApiDocument(c => c.Title = "DotNetMicroservice");
 
             // ## Messaging
-            var message = InMemoryMessagePublisherReceiver.Create();
-            services.AddSingleton(((IMessagePublisher)message).WithMessageType<CreateOrderMessage>());
-            services.AddSingleton(((IMessageReceiver)message).WithMessageType<CreateOrderMessage>());
+            var createQueue = InMemoryMessagePublisherReceiver.Create();
+            services.AddSingleton(((IMessagePublisher)createQueue).WithMessageType<CreateOrderMessage>());
+            services.AddSingleton(((IMessageReceiver)createQueue).WithMessageType<CreateOrderMessage>());
+
+            var completeQueue = InMemoryMessagePublisherReceiver.Create();
+            services.AddSingleton(((IMessagePublisher)completeQueue).WithMessageType<CompleteOrderMessage>());
+            services.AddSingleton(((IMessageReceiver)completeQueue).WithMessageType<CompleteOrderMessage>());
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

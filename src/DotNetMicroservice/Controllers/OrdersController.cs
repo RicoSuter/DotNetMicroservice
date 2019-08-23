@@ -15,12 +15,14 @@ namespace DotNetMicroservice.Controllers
     [Route("api/orders")]
     public class OrdersController : ControllerBase
     {
-        private readonly IMessagePublisher<CreateOrderMessage> _orderMessagePublisher;
+        private readonly IMessagePublisher<CreateOrderMessage> _createOrderPublisher;
+        private readonly IMessagePublisher<CompleteOrderMessage> _completeOrderPublisher;
         private readonly IOrderStorage _orderStorage;
 
-        public OrdersController(IMessagePublisher<CreateOrderMessage> orderMessagePublisher, IOrderStorage orderStorage)
+        public OrdersController(IMessagePublisher<CreateOrderMessage> createOrderPublisher, IMessagePublisher<CompleteOrderMessage> completeOrderPublisher, IOrderStorage orderStorage)
         {
-            _orderMessagePublisher = orderMessagePublisher;
+            _createOrderPublisher = createOrderPublisher;
+            _completeOrderPublisher = completeOrderPublisher;
             _orderStorage = orderStorage;
         }
 
@@ -32,7 +34,9 @@ namespace DotNetMicroservice.Controllers
             {
                 Id = o.Id,
                 ProductId = o.ProductId,
-                Quantity = o.Quantity
+                Quantity = o.Quantity,
+                ParcelNumber = o.ParcelNumber,
+                State = o.State.ToString()
             });
         }
 
@@ -42,7 +46,7 @@ namespace DotNetMicroservice.Controllers
             var id = Guid.NewGuid().ToString();
 
             // ## Messaging: Publisher
-            await _orderMessagePublisher.PublishAsJsonAsync(new CreateOrderMessage
+            await _createOrderPublisher.PublishAsJsonAsync(new CreateOrderMessage
             {
                 Id = id,
                 UserId = userId,
@@ -51,6 +55,17 @@ namespace DotNetMicroservice.Controllers
             });
 
             return id;
+        }
+
+        [HttpPut("{orderId}")]
+        public async Task CompleteOrder(string orderId, [FromBody] string parcelNumber)
+        {
+            // ## Messaging: Publisher
+            await _completeOrderPublisher.PublishAsJsonAsync(new CompleteOrderMessage
+            {
+                Id = orderId,
+                ParcelNumber = parcelNumber
+            });
         }
     }
 }

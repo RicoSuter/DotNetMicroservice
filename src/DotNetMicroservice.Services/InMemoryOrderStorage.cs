@@ -14,15 +14,22 @@ namespace DotNetMicroservice.Processes
             _orders = new List<Order>();
         }
 
-        public Task<Order[]> ReadOrdersAsync(string userId)
+        public async Task<Order> ReadOrderAsync(string id)
         {
-            return Task.FromResult(_orders.Where(o => o.UserId == userId).ToArray());
+            await Task.Delay(500);
+            return _orders.First(o => o.Id == id);
         }
 
-        public Task WriteOrderAsync(Order order)
+        public async Task<Order[]> ReadOrdersAsync(string userId)
         {
+            await Task.Delay(500);
+            return _orders.Where(o => o.UserId == userId).ToArray();
+        }
+
+        public async Task WriteOrderAsync(Order order)
+        {
+            await Task.Delay(1000);
             _orders.Add(order);
-            return Task.CompletedTask;
         }
     }
 }

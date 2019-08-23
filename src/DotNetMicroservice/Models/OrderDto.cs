@@ -7,5 +7,9 @@
         public string ProductId { get; set; }
 
         public int Quantity { get; set; }
+
+        public string ParcelNumber { get; set; }
+
+        public string State { get; set; }
     }
 }

@@ -8,7 +8,7 @@ namespace DotNetMicroservice.Tests
     public class OrdersControllerTests : IntegrationTestsBase
     {
         [Fact]
-        public async Task WhenOrderIsCreated_ThenOrderIsProcessed()
+        public async Task WhenOrderIsCreatedAndCompleted_ThenOrderIsProcessed()
         {
             // Arrange
             using (var factory = CreateInMemoryWebApplicationFactory())
@@ -17,16 +17,19 @@ namespace DotNetMicroservice.Tests
                 var client = new OrdersClient(httpClient);
 
                 var userId = "myUser";
+                var parcelNumber = "parcel-number-123";
 
                 // Act
                 var id = await client.CreateOrderAsync(userId, new OrderDto { ProductId = "foo", Quantity = 5 });
-                var orders = await WaitForResultAsync(async () =>
-                {
-                    return await client.GetOrdersAsync(userId);
-                }, e => e.Any());
+                await Test.WaitForAnyAsync(async () => await client.GetOrdersAsync(userId));
+
+                await client.CompleteOrderAsync(id, parcelNumber);
+                var orders = await Test.WaitForAsync(
+                    async () => await client.GetOrdersAsync(userId), 
+                    o => o.Any(order => order.Id == id && order.State == "Completed"));
 
                 // Assert
-                Assert.Contains(orders, o => o.Id == id);
+                Assert.Contains(orders, o => o.ParcelNumber == parcelNumber);
             }
         }
     }

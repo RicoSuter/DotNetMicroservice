@@ -82,6 +82,43 @@
           }
         }
       }
+    },
+    "/api/orders/{orderId}": {
+      "put": {
+        "tags": [
+          "Orders"
+        ],
+        "operationId": "Orders_CompleteOrder",
+        "parameters": [
+          {
+            "name": "orderId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          }
+        ],
+        "requestBody": {
+          "x-name": "parcelNumber",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 2
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
     }
   },
   "components": {
@@ -101,6 +138,14 @@
           "quantity": {
             "type": "integer",
             "format": "int32"
+          },
+          "parcelNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "state": {
+            "type": "string",
+            "nullable": true
           }
         }
       }
