@@ -6,3 +6,4 @@
 bin
 obj
 /src/.cr/personal/Unit Testing
+*.user

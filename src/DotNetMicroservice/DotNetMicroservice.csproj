@@ -6,6 +6,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="2.2.0" />
     <PackageReference Include="NSwag.AspNetCore" Version="13.0.5" />
     <PackageReference Include="NSwag.MSBuild" Version="13.0.5" />
 
@@ -15,6 +16,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DotNetMicroservice.Domain\DotNetMicroservice.Domain.csproj" />
+    <ProjectReference Include="..\DotNetMicroservice.Processes\DotNetMicroservice.Processes.csproj" />
     <ProjectReference Include="..\DotNetMicroservice.Services\DotNetMicroservice.Services.csproj" />
   </ItemGroup>
 

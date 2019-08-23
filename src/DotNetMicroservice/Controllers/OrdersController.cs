@@ -43,9 +43,9 @@ namespace DotNetMicroservice.Controllers
         [HttpPost("{userId}")]
         public async Task<string> CreateOrder(string userId, [FromBody] OrderDto order)
         {
-            var id = Guid.NewGuid().ToString();
-
             // ## Messaging: Publisher
+
+            var id = Guid.NewGuid().ToString();
             await _createOrderPublisher.PublishAsJsonAsync(new CreateOrderMessage
             {
                 Id = id,

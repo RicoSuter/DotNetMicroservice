@@ -1,19 +1,20 @@
 using DotNetMicroservice.Client;
+using DotNetMicroservice.Tests.Common;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
 namespace DotNetMicroservice.Tests
 {
-    public class OrdersControllerTests : IntegrationTestsBase
+    public class OrdersControllerTests
     {
         [Fact]
         public async Task WhenOrderIsCreatedAndCompleted_ThenParcelNumberIsAvailable()
         {
             // Arrange
-            using (var factory = CreateInMemoryWebApplicationFactory())
+            using (var webApplication = Test.CreateWebApplication())
             {
-                var httpClient = factory.CreateClient();
+                var httpClient = webApplication.CreateClient();
                 var client = new OrdersClient(httpClient);
 
                 var userId = "myUser";

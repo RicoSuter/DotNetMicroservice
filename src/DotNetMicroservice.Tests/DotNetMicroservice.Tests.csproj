@@ -16,4 +16,12 @@
     <ProjectReference Include="..\DotNetMicroservice.Processes\DotNetMicroservice.Processes.csproj" />
     <ProjectReference Include="..\DotNetMicroservice\DotNetMicroservice.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="testsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>

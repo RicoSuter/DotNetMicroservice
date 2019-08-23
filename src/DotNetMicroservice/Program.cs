@@ -1,24 +1,63 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore;
+﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace DotNetMicroservice
 {
-    public class Program
+    public static class Program
     {
         public static void Main(string[] args)
         {
-            CreateWebHostBuilder(args).Build().Run();
+            var configuration = new ConfigurationBuilder()
+               .AddCommandLine(args)
+               .AddEnvironmentVariables()
+               .AddJsonFile("appsettings.json", optional: true)
+               .Build();
+
+            var mode = configuration.GetMode();
+            if (mode == "webapi" || mode == "all")
+            {
+                CreateWebHostBuilder(args).Build().Run();
+            }
+            else
+            {
+                new HostBuilder()
+                   .ConfigureServices((hostContext, services) =>
+                   {
+                       if (mode == "createorders")
+                       {
+                           services.AddCreateOrderMessageProcessor();
+                       }
+                       else if (mode == "completeorders")
+                       {
+                           services.AddCompleteOrderMessageProcessor();
+                       }
+
+                       services.AddLogging();
+                   })
+                   .Build()
+                   .Run();
+            }
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>();
+                .UseStartup<Startup>()
+                .ConfigureServices((ctx, services) =>
+                {
+                    var mode = ctx.Configuration.GetMode();
+                    if (mode == "all")
+                    {
+                        services.AddCreateOrderMessageProcessor();
+                        services.AddCompleteOrderMessageProcessor();
+                    }
+                });
+
+        private static string GetMode(this IConfiguration configuration)
+        {
+            return configuration.GetValue("Mode", "all").ToLowerInvariant();
+        }
     }
 }
