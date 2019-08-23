@@ -19,10 +19,7 @@ namespace DotNetMicroservice
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            services
-                .AddBusinessServices()
-                .AddCreateOrderMessagePublisherReceiver()
-                .AddCompleteOrderMessagePublisherReceiver();
+            services.AddBusinessServices();
 
             // ## NSwag
             services.AddOpenApiDocument(c => c.Title = "DotNetMicroservice");
