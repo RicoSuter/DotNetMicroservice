@@ -11,9 +11,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetMicroservice.Services
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetMicroservice.Domain", "DotNetMicroservice.Domain\DotNetMicroservice.Domain.csproj", "{BE48E8DA-7936-4E34-9A7F-473F942CA3C1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetMicroservice.Client", "DotNetMicroservice.Client\DotNetMicroservice.Client.csproj", "{42E6F7FE-8023-4C6D-B65A-458C306BB88F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetMicroservice.Client", "DotNetMicroservice.Client\DotNetMicroservice.Client.csproj", "{42E6F7FE-8023-4C6D-B65A-458C306BB88F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetMicroservice.Tests", "DotNetMicroservice.Tests\DotNetMicroservice.Tests.csproj", "{668007F3-2241-4042-A1A0-8C05FF210306}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetMicroservice.Tests", "DotNetMicroservice.Tests\DotNetMicroservice.Tests.csproj", "{668007F3-2241-4042-A1A0-8C05FF210306}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E4673B4C-0D3B-45DA-8F76-F16D867F8640}"
+	ProjectSection(SolutionItems) = preProject
+		..\README.md = ..\README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -8,7 +8,7 @@ namespace DotNetMicroservice.Tests
     public class OrdersControllerTests : IntegrationTestsBase
     {
         [Fact]
-        public async Task WhenOrderIsCreatedAndCompleted_ThenOrderIsProcessed()
+        public async Task WhenOrderIsCreatedAndCompleted_ThenParcelNumberIsAvailable()
         {
             // Arrange
             using (var factory = CreateInMemoryWebApplicationFactory())
