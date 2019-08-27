@@ -1,11 +1,9 @@
 ﻿using System.Threading.Tasks;
 
-namespace DotNetMicroservice.Processes
+namespace DotNetMicroservice.Services.Interfaces
 {
     public interface IProductService
     {
-        Task AddProduct(string id, string title, int stock);
-
         Task<bool> RemoveFromStockAsync(string id, int quantity);
     }
 }

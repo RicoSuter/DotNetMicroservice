@@ -19,7 +19,7 @@ namespace DotNetMicroservice.Tests.Common
             return configurationRoot;
         });
 
-        public static string GetSetting(string name)
+        public static string GetTestSetting(string name)
         {
             return _configuration.Value[name];
         }
@@ -47,7 +47,7 @@ namespace DotNetMicroservice.Tests.Common
 
         public static IWebApplication CreateWebApplication(string externalApiEndpointSettingName = "apiEndpoint")
         {
-            var baseAddress = GetSetting(externalApiEndpointSettingName);
+            var baseAddress = GetTestSetting(externalApiEndpointSettingName);
             if (!string.IsNullOrEmpty(baseAddress))
             {
                 return new ExternalWebApplication(new Uri(baseAddress));

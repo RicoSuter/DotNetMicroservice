@@ -1,17 +1,19 @@
 ﻿using DotNetMicroservice.Domain;
+using DotNetMicroservice.Repositories.Interfaces;
+using DotNetMicroservice.Services.Interfaces;
 using System.Threading.Tasks;
 
-namespace DotNetMicroservice.Processes
+namespace DotNetMicroservice.Services
 {
     public class OrderService : IOrderService
     {
-        private readonly IOrderStorage _orderStorage;
+        private readonly IOrderRepository _orderRepository;
         private readonly IProductService _productService;
 
-        public OrderService(IProductService productService, IOrderStorage orderStorage)
+        public OrderService(IProductService productService, IOrderRepository orderRepository)
         {
             _productService = productService;
-            _orderStorage = orderStorage;
+            _orderRepository = orderRepository;
         }
 
         public async Task CreateOrderAsync(string id, string userId, string productId, int quantity)
@@ -19,7 +21,7 @@ namespace DotNetMicroservice.Processes
             var successful = await _productService.RemoveFromStockAsync(productId, quantity);
             if (successful)
             {
-                await _orderStorage.WriteOrderAsync(new Order
+                await _orderRepository.UpsertOrderAsync(new Order
                 {
                     Id = id,
                     State = OrderState.Pending,
@@ -30,7 +32,7 @@ namespace DotNetMicroservice.Processes
             }
             else
             {
-                await _orderStorage.WriteOrderAsync(new Order
+                await _orderRepository.UpsertOrderAsync(new Order
                 {
                     Id = id,
                     State = OrderState.NotInStock,
@@ -38,16 +40,16 @@ namespace DotNetMicroservice.Processes
                     UserId = userId,
                     Quantity = quantity
                 });
-            }           
+            }
         }
 
         public async Task CompleteOrderAsync(string id, string parcelNumber)
         {
-            var order = await _orderStorage.ReadOrderAsync(id);
+            var order = await _orderRepository.GetOrderAsync(id);
             order.State = OrderState.Completed;
             order.ParcelNumber = parcelNumber;
 
-            await _orderStorage.WriteOrderAsync(order);
+            await _orderRepository.UpsertOrderAsync(order);
         }
     }
 }

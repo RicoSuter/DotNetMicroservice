@@ -4,12 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace DotNetMicroservice.Tests
+namespace DotNetMicroservice.Tests.Integration
 {
-    public class OrdersControllerTests
+    public class OrderScenarioTests
     {
         [Fact]
-        public async Task WhenOrderIsCreatedAndCompleted_ThenParcelNumberIsAvailable()
+        public async Task WhenOrderIsCreatedAndProcessed_ThenParcelNumberIsAvailable()
         {
             // Arrange
             using (var webApplication = Test.CreateWebApplication())
@@ -26,7 +26,7 @@ namespace DotNetMicroservice.Tests
 
                 await client.CompleteOrderAsync(id, parcelNumber);
                 var orders = await Test.WaitForAsync(
-                    async () => await client.GetOrdersAsync(userId), 
+                    async () => await client.GetOrdersAsync(userId),
                     o => o.Any(order => order.Id == id && order.State == "Completed"));
 
                 // Assert

@@ -1,9 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\DotNetMicroservice.Domain\DotNetMicroservice.Domain.csproj" />
-    <ProjectReference Include="..\DotNetMicroservice.Repositories\DotNetMicroservice.Repositories.csproj" />
   </ItemGroup>
+
 </Project>

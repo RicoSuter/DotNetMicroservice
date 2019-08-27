@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace DotNetMicroservice.Processes
+namespace DotNetMicroservice.Services.Interfaces
 {
     public interface IOrderService
     {

@@ -1,4 +1,8 @@
 ﻿using DotNetMicroservice.Processes;
+using DotNetMicroservice.Repositories;
+using DotNetMicroservice.Repositories.Interfaces;
+using DotNetMicroservice.Services;
+using DotNetMicroservice.Services.Interfaces;
 using DotNetMicroservice.Services.Messages;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -11,8 +15,8 @@ namespace DotNetMicroservice
     {
         public static IServiceCollection AddBusinessServices(this IServiceCollection services)
         {
-            services.TryAddSingleton<IOrderStorage, InMemoryOrderStorage>();
-            services.TryAddSingleton<IProductService, InMemoryProductService>();
+            services.TryAddSingleton<IOrderRepository, InMemoryOrderRepository>();
+            services.TryAddSingleton<IProductService, ProductService>();
             services.TryAddSingleton<IOrderService, OrderService>();
             return services;
         }

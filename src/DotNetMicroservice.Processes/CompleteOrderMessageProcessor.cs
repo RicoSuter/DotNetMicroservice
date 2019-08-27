@@ -1,4 +1,5 @@
-﻿using DotNetMicroservice.Services.Messages;
+﻿using DotNetMicroservice.Services.Interfaces;
+using DotNetMicroservice.Services.Messages;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Namotion.Messaging;

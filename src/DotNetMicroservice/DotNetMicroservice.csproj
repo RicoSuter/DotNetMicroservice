@@ -17,6 +17,7 @@
   <ItemGroup>
     <ProjectReference Include="..\DotNetMicroservice.Domain\DotNetMicroservice.Domain.csproj" />
     <ProjectReference Include="..\DotNetMicroservice.Processes\DotNetMicroservice.Processes.csproj" />
+    <ProjectReference Include="..\DotNetMicroservice.Repositories\DotNetMicroservice.Repositories.csproj" />
     <ProjectReference Include="..\DotNetMicroservice.Services\DotNetMicroservice.Services.csproj" />
   </ItemGroup>
 

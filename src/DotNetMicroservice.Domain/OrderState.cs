@@ -3,7 +3,9 @@
     public enum OrderState
     {
         Pending,
+
         NotInStock,
+
         Completed
     }
 }

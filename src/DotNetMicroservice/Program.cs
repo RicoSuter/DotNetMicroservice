@@ -13,7 +13,6 @@ namespace DotNetMicroservice
             var configuration = new ConfigurationBuilder()
                .AddCommandLine(args)
                .AddEnvironmentVariables()
-               .AddJsonFile("appsettings.json", optional: true)
                .Build();
 
             var mode = configuration.GetMode();

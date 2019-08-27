@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DotNetMicroservice.Models;
-using DotNetMicroservice.Processes;
+using DotNetMicroservice.Repositories.Interfaces;
 using DotNetMicroservice.Services.Messages;
 using Microsoft.AspNetCore.Mvc;
 using Namotion.Messaging;
@@ -17,19 +17,19 @@ namespace DotNetMicroservice.Controllers
     {
         private readonly IMessagePublisher<CreateOrderMessage> _createOrderPublisher;
         private readonly IMessagePublisher<CompleteOrderMessage> _completeOrderPublisher;
-        private readonly IOrderStorage _orderStorage;
+        private readonly IOrderRepository _orderRepository;
 
-        public OrdersController(IMessagePublisher<CreateOrderMessage> createOrderPublisher, IMessagePublisher<CompleteOrderMessage> completeOrderPublisher, IOrderStorage orderStorage)
+        public OrdersController(IMessagePublisher<CreateOrderMessage> createOrderPublisher, IMessagePublisher<CompleteOrderMessage> completeOrderPublisher, IOrderRepository orderRepository)
         {
             _createOrderPublisher = createOrderPublisher;
             _completeOrderPublisher = completeOrderPublisher;
-            _orderStorage = orderStorage;
+            _orderRepository = orderRepository;
         }
 
         [HttpGet("{userId}")]
         public async Task<IEnumerable<OrderDto>> GetOrders(string userId)
         {
-            var orders = await _orderStorage.ReadOrdersAsync(userId);
+            var orders = await _orderRepository.GetOrdersAsync(userId);
             return orders.Select(o => new OrderDto
             {
                 Id = o.Id,
